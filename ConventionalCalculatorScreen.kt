@@ -4,22 +4,34 @@ package com.mahmoud.swtcalculator
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.BarChart
-import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mahmoud.swtcalculator.ui.shared.*
+
+// ==================== HELPER FUNCTIONS ====================
+
+private fun formatResult(value: Double): String {
+    return if (value == value.toLong().toDouble()) {
+        value.toLong().toString()
+    } else {
+        String.format("%.10f", value).trimEnd('0').trimEnd('.')
+    }
+}
+
+// ==================== MAIN COMPOSABLE ====================
 
 @Composable
 fun ConventionalCalculatorScreen(onBack: () -> Unit) {
@@ -118,14 +130,6 @@ fun ConventionalCalculatorScreen(onBack: () -> Unit) {
         } else {
             display = "0"
             isNewNumber = true
-        }
-    }
-
-    fun formatResult(value: Double): String {
-        return if (value == value.toLong().toDouble()) {
-            value.toLong().toString()
-        } else {
-            String.format("%.10f", value).trimEnd('0').trimEnd('.')
         }
     }
 
@@ -238,8 +242,8 @@ fun ConventionalCalculatorScreen(onBack: () -> Unit) {
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight(),
-                            backgroundColor = Color(red=0.97f, green=0.55f, blue=0.15f),
-                            textColor = androidx.compose.ui.graphics.Color.White,
+                            backgroundColor = Color(red = 0.97f, green = 0.55f, blue = 0.15f),
+                            textColor = Color.White,
                             onClick = { performOperation("÷") }
                         )
                     }
@@ -259,8 +263,8 @@ fun ConventionalCalculatorScreen(onBack: () -> Unit) {
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight(),
-                            backgroundColor = Color(red=0.97f, green=0.55f, blue=0.15f),
-                            textColor = androidx.compose.ui.graphics.Color.White,
+                            backgroundColor = Color(red = 0.97f, green = 0.55f, blue = 0.15f),
+                            textColor = Color.White,
                             onClick = { performOperation("×") }
                         )
                     }
@@ -280,8 +284,8 @@ fun ConventionalCalculatorScreen(onBack: () -> Unit) {
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight(),
-                            backgroundColor = Color(red=0.97f, green=0.55f, blue=0.15f),
-                            textColor = androidx.compose.ui.graphics.Color.White,
+                            backgroundColor = Color(red = 0.97f, green = 0.55f, blue = 0.15f),
+                            textColor = Color.White,
                             onClick = { performOperation("-") }
                         )
                     }
@@ -301,8 +305,8 @@ fun ConventionalCalculatorScreen(onBack: () -> Unit) {
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight(),
-                            backgroundColor = Color(red=0.97f, green=0.55f, blue=0.15f),
-                            textColor = androidx.compose.ui.graphics.Color.White,
+                            backgroundColor = Color(red = 0.97f, green = 0.55f, blue = 0.15f),
+                            textColor = Color.White,
                             onClick = { performOperation("+") }
                         )
                     }
@@ -335,8 +339,8 @@ fun ConventionalCalculatorScreen(onBack: () -> Unit) {
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight(),
-                            backgroundColor = Color(red=0.10f, green=0.72f, blue=0.85f),
-                            textColor = androidx.compose.ui.graphics.Color.White,
+                            backgroundColor = Color(red = 0.10f, green = 0.72f, blue = 0.85f),
+                            textColor = Color.White,
                             onClick = { calculate() }
                         )
                     }
@@ -348,22 +352,20 @@ fun ConventionalCalculatorScreen(onBack: () -> Unit) {
     }
 }
 
+// ==================== BUTTON COMPOSABLE ====================
+
 @Composable
 fun CalcButton(
     text: String,
     modifier: Modifier = Modifier,
-    backgroundColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.surface,
-    textColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurface,
+    backgroundColor: Color = MaterialTheme.colorScheme.surface,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor
-        ),
+        modifier = modifier.fillMaxWidth().fillMaxHeight(),
+        colors = ButtonDefaults.buttonColors(containerColor = backgroundColor),
         shape = RoundedCornerShape(12.dp)
     ) {
         Text(
@@ -374,8 +376,3 @@ fun CalcButton(
         )
     }
 }
-
-import androidx.compose.ui.graphics.Color
-import androidx.compose.material3.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Button
